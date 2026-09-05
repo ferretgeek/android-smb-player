@@ -1,29 +1,21 @@
-<p align="center">
-  <img src="./docs/images/social-preview.png" alt="Android SMB video player — play straight from a network share" width="100%" />
-</p>
-
-# Android SMB video player
+# LAN Video Player · LanPlay
 
 [中文](./README.md) · English
 
-[![CI](https://github.com/ferretgeek/android-smb-player/actions/workflows/ci.yml/badge.svg)](https://github.com/ferretgeek/android-smb-player/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-0f766e.svg)](./LICENSE)
-[![Android 8+](https://img.shields.io/badge/Android-8%2B-3DDC84?logo=android&logoColor=white)](#building-it-yourself)
+Play videos from a computer or NAS shared folder on your Android phone or tablet, with subtitles and playback resume.
 
-> Open a folder shared from your desktop or NAS, tap a file, and it plays.
+**Requirements:** Android 8+ and access to an SMB share. Source code is available; build the APK yourself.
 
-## Why this exists
+[Build and install](#building-it-yourself) · [Screenshots](#interface) · [Usage and troubleshooting](./docs/OPERATIONS.md) · [Desktop poster tool](./lanplay-scraper/README.md)
 
-Your movies live on a desktop or a NAS. To watch them on a phone or tablet, you usually pick one of two paths: copy a file over (slow, wasteful), or stand up a whole media server (something else to maintain, transcode, and keep running).
+## What it does
 
-There's a simpler third path: a Windows shared folder, a Synology box, anything speaking SMB — connect and play. That's what this app is.
-
-- Subtitles are matched automatically, with a character-set switch for when they come out garbled.
-- Playback position is remembered, so you pick up where you left off.
-- History, bookmarks, tags, and notes all stay on the device.
-- **No account, no cloud, no transcoding server, no telemetry.**
-
-Its "server side" is the share you already have. Nothing extra to install.
+- **Browse shared videos:** LAN scanning, share discovery, guest or account access, search, and sorting.
+- **Playback and subtitles:** Media3 with automatic libVLC fallback, hardware decoding, speed control, scaling, and frame-rate matching; automatic external-subtitle matching, character-set selection, and embedded or external audio tracks.
+- **Save viewing progress:** resume, history, bookmarks, tags, notes, trash, and full backup and restore.
+- **Interface themes:** multiple light palettes and a `#17191d` deep-gray dark theme across browsing, details, and playback.
+- **Keep data on the device:** no account system, cloud sync, or telemetry; share credentials are encrypted locally and logs are redacted.
+- **Optional poster tool:** generate posters and video metadata on a computer and write them into the share for the phone to read. No additional transcoding or media-management server is required.
 
 ## Interface
 
@@ -33,19 +25,9 @@ The screenshot below comes from the project's built-in anonymous gallery: no SMB
   <img src="./docs/images/gallery-preview.png" alt="Anonymous gallery preview" width="360" />
 </p>
 
-## What it does
-
-- **Find it and get in** — LAN scanning, share discovery, guest or account sign-in, browsing, search, and sorting.
-- **Actually play it** — Media3 as the primary engine with an automatic libVLC fallback for awkward codecs, plus hardware decoding, speed control, scaling, and frame-rate matching.
-- **Subtitles and audio** — automatic external-subtitle matching, character-set selection, embedded tracks, and external audio tracks.
-- **Remember things** — resume, watch history, bookmarks, tags, notes, trash, and full backup and restore.
-- **Look right** — multiple light palettes and a `#17191d` deep-gray dark mode across browsing, details, and playback.
-- **Leave nothing behind** — no account system, cloud sync, or telemetry; credentials are encrypted on-device and logs are redacted.
-- **Posters, if you want them** — an optional desktop scraper generates posters and structured metadata into the share ahead of time; the phone only reads the result.
-
 ## Building it yourself
 
-The first public version **ships source code rather than a general signed APK**, so a development signature never gets mistaken for a trusted distribution identity.
+Only source code is published; there is no signed APK to download. Choose **Code → Download ZIP** on the repository page, extract it, and open PowerShell in the project root.
 
 Install JDK 21, Android SDK 37, and Android Studio, then:
 
@@ -66,7 +48,7 @@ cd ..\lanplay-scraper
 .\.venv\Scripts\python.exe -m unittest -v
 ```
 
-## Worth noting technically
+## Technical details
 
 **SMB 2/3 is implemented natively.** No WebDAV bridge, no third-party gateway, no companion service on the desktop. The folder you right-clicked and shared in Windows *is* the data source.
 
